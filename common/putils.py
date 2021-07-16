@@ -22,8 +22,10 @@ def timing(f):
 
 def store_safely(folder,name,to_store):
     ''' to prevent losing information due to interruption of process'''
-    new_name = folder+name+'.npy'
-    old_name = folder+name+'_old.npy'
+    for_file_name = (folder + name).replace(":", "-")
+    new_name = for_file_name +'.npy'
+    old_name = for_file_name +'_old.npy'
+
     if os.path.exists(new_name):
         copyfile(new_name,old_name)
     np.save(new_name,to_store)

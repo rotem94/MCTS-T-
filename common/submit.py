@@ -24,8 +24,9 @@ def candidate(i,hyperloop):
     return '{0:04}h/'.format(i) if hyperloop else '{0:04}/'.format(i)
 
 def submit_slurm(hps,hps_setup,hyperloopname,job_dir,slurmout_dir,ntasks,nodes,n_cpu,mem_per_cpu):
-    # make sh file        
-    run_file = job_dir + hps.game + hyperloopname + '0.sh'
+    # make sh file
+    hyper_loop_name_for_file = hyperloopname.replace(":", "-")
+    run_file = job_dir + hps.game + hyper_loop_name_for_file + '0.sh'
     
     if hps_setup.distributed:
         base = ' '.join(['mpirun  -bind-to none -map-by slot -x NCCL_DEBUG=INFO -x LD_LIBRARY_PATH -x PATH'

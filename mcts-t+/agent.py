@@ -33,7 +33,7 @@ from lib.mcts import MCTS,display_info
 
 def agent(hps):
     ''' Agent function '''
-    tf.reset_default_graph()
+    tf.compat.v1.reset_default_graph()
     
     # storage
     result = {}
@@ -46,8 +46,8 @@ def agent(hps):
     is_atari = is_atari_game(Env)
     mcts_env = make_game(hps.game) if is_atari else None
 
-    with tf.Session() as sess, sess.as_default():
-        sess.run(tf.global_variables_initializer())
+    with tf.compat.v1.Session() as sess, sess.as_default():
+        sess.run(tf.compat.v1.global_variables_initializer())
         global_t_mcts = 0
         global_t = 0 
         
@@ -108,7 +108,7 @@ def agent(hps):
             #if R > best_R:
             #    result.update({'seed':seed,'actions':a_store,'R':best_R})
             #    best_R = R
-            store_safely(hps.result_dir,'result',result)
+            # store_safely(hps.result_dir,'result',result)
   
             if (global_t_mcts > hps.n_t) or (ep > hps.n_eps):
                 break # break out of episode loop
